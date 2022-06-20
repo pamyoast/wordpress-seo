@@ -77,12 +77,19 @@ class WPSEO_Post_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 				'title_template'              => $this->get_title_template(),
 				'title_template_no_fallback'  => $this->get_title_template( false ),
 				'metadesc_template'           => $this->get_metadesc_template(),
-				'metaDescriptionDate'         => $this->get_metadesc_date(),
 				'first_content_image'         => $this->get_image_url(),
 				'social_title_template'       => $this->get_social_title_template(),
 				'social_description_template' => $this->get_social_description_template(),
 				'social_image_template'       => $this->get_social_image_template(),
 			];
+
+			/*
+			 * We do not want to show or use any dates on WooCommerce product pages
+			 * (e.g. in the Google Preview and analysis).
+			 */
+			if ( $this->post->post_type !== 'product' ) {
+				$values_to_set['metaDescriptionDate'] = $this->get_metadesc_template();
+			}
 
 			$values = ( $values_to_set + $values );
 		}
