@@ -100,6 +100,23 @@ class WooCommerce implements Integration_Interface {
 		\add_filter( 'wpseo_metadesc', [ $this, 'description' ], 10, 2 );
 		\add_filter( 'wpseo_canonical', [ $this, 'canonical' ], 10, 2 );
 		\add_filter( 'wpseo_adjacent_rel_url', [ $this, 'adjacent_rel_url' ], 10, 3 );
+		\add_filter( 'wpseo_replacements', [ $this, 'do_not_replace_date_replace_var' ], 10, 2 );
+	}
+
+	/**
+	 * Makes sure to never output the date replace var on WooCommerce products.
+	 *
+	 * @param array $replacements The original replacements.
+	 * @param mixed $object       The object representing the current page (e.g. a post, page or term).
+	 *
+	 * @return array The new replacements, with the `%%date%%` replace var set to the empty string.
+	 */
+	public function do_not_replace_date_replace_var( $replacements, $object ) {
+		if ( $object->post_type === 'product' ) {
+			$replacements['%%date%%'] = '';
+		}
+
+		return $replacements;
 	}
 
 	/**

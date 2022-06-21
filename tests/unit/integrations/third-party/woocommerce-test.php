@@ -159,6 +159,52 @@ class WooCommerce_Test extends TestCase {
 		$this->assertNotFalse( Monkey\Filters\has( 'wpseo_frontend_page_type_simple_page_id', [ $this->instance, 'get_page_id' ] ) );
 		$this->assertNotFalse( Monkey\Filters\has( 'wpseo_title', [ $this->instance, 'title' ] ) );
 		$this->assertNotFalse( Monkey\Filters\has( 'wpseo_metadesc', [ $this->instance, 'description' ] ) );
+		$this->assertNotFalse( Monkey\Filters\has( 'wpseo_replacements', [ $this->instance, 'do_not_replace_date_replace_var' ] ) );
+	}
+
+	/**
+	 * Tests whether we replace the date replace var with an empty string on product pages.
+	 *
+	 * @covers ::do_not_replace_date_replace_var
+	 */
+	public function test_do_not_replace_date_replace_var() {
+		$replacements = [
+			'%%title%%' => 'Cats are great!',
+			'%%date%%'  => '06/03/2024',
+		];
+
+		$product = (object) [
+			'post_type' => 'product',
+		];
+
+		$this->assertEquals(
+			[
+				'%%title%%' => 'Cats are great!',
+				'%%date%%'  => '',
+			],
+			$this->instance->do_not_replace_date_replace_var( $replacements, $product )
+		);
+	}
+
+	/**
+	 * Tests whether we still replace the date replace var when on non-product pages.
+	 *
+	 * @covers ::do_not_replace_date_replace_var
+	 */
+	public function test_do_replace_date_replace_var_when_not_on_a_product() {
+		$replacements = [
+			'%%title%%' => 'Cats are great!',
+			'%%date%%'  => '06/03/2024',
+		];
+
+		$product = (object) [
+			'post_type' => 'post',
+		];
+
+		$this->assertEquals(
+			$replacements,
+			$this->instance->do_not_replace_date_replace_var( $replacements, $product )
+		);
 	}
 
 	/**

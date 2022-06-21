@@ -1010,13 +1010,6 @@ class WPSEO_Metabox extends WPSEO_Meta {
 			$cached_replacement_vars[ $var ] = wpseo_replace_vars( '%%' . $var . '%%', $this->get_metabox_post() );
 		}
 
-		/*
-		 * We do not want to add the date replace var for WooCommerce products.
-		 */
-		if ( $this->post->post_type === 'product' ) {
-			$cached_replacement_vars['date'] = '';
-		}
-
 		// Merge custom replace variables with the WordPress ones.
 		return array_merge( $cached_replacement_vars, $this->get_custom_replace_vars( $this->get_metabox_post() ) );
 	}
