@@ -245,9 +245,9 @@ Release Date: June 28th, 2022
 
 Enhancements:
 
+* Adds an integration with WordProof, which allows adding a timestamp to the privacy policy and terms and conditions pages.
 * Adds a `meta author` tag to ensure that LinkedIn picks up the name of a post author properly.
 * Adds a new filter `wpseo_change_home_url` that allows changing the URL checked by the Ryte integration, to support more versatile hosting setups.
-* Adds an integration with WordProof, which allows adding a timestamp to the privacy policy and terms and conditions pages.
 * Adds a notice that displays when Yoast SEO Premium is installed but not activated prompting the user to activate it.
 * Adds support for `webp` images for OpenGraph output.
 * Adds the name of the article author to the `author` section of the `Article` schema piece, to ensure that Pinterest picks up the name of a post author properly.
